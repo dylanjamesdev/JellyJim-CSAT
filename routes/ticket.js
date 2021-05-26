@@ -5,12 +5,12 @@ const nodemailer = require('nodemailer');
 // Inits
 var route = Router();
 const transporter = nodemailer.createTransport({
-  host: "mail.tritan.gg",
+  host: "",
   port: 465,
   secure: true, // upgrade later with STARTTLS
   auth: {
-    user: "jellyjim_csat@tritan.gg",
-    pass: "turrocke52"
+    user: "",
+    pass: ""
   },
   tls: {
     rejectUnauthorized: false
@@ -41,8 +41,8 @@ route.post("/:ticket/positive", (req, res, next) => {
   const comment = req.body.comments;
 
   var mailOptions = {
-    from: 'jellyjim_csat@tritan.gg',
-    to: 'hello@jellyjim.com',
+    from: '',
+    to: '',
     subject: 'Ticket CSAT Feedback',
     text: `The owner of ticket #${ticket} selected that they are happy with the resolution. \n \n Comments: \n ${comment}`
   };
@@ -81,9 +81,9 @@ route.post("/:ticket/negative", (req, res, next) => {
   const comment = req.body.comments;
 
   var mailOptions = {
-    from: 'jellyjim_csat@tritan.gg',
-    to: 'hello@jellyjim.com',
-    subject: 'Ticket CSAT Feedback',
+    from: '',
+    to: '',
+    subject: '',
     text: `The owner of ticket #${ticket} selected that they are unhappy with the resolution. \n \n Comments: \n ${comment}`
   };
 
