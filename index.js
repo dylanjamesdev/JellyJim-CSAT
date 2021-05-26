@@ -44,7 +44,7 @@ function loadRoutes() {
         console.log(`${routePath}`);
       } catch (error) {
         console.log(
-          `Error occured with the route "${filename}":\n\n${error} Ignoreing continuing`
+          `Error occured with the route "${filename}":\n\n${error} Ignoring continuing`
         );
       }
     });
