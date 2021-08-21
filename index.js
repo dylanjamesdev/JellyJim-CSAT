@@ -1,13 +1,17 @@
-// Imports
+
 const express = require("express");
 const bodyParser = require("body-parser");
 const path = require('path');
 const fs = require("fs");
 
-// Inits
+const config = require('./config');
+const indexRoute = require('./routes/index');
+const positiveRoute = require('./routes/positive')
+const negativeRoute = require('./routes/negative')
+const miscRoute = require('./routes/misc')
+
 const app = express();
 
-// Standard
 app.disable("x-powered-by");
 app.set("views", "./views");
 app.set("view engine", "ejs");
@@ -18,37 +22,15 @@ app.use(
   })
 );
 
-// Begin Web Server
-app.listen(process.env.port, () => {
-  console.log("Running");
+app.use('/', indexRoute);
+console.log(`Route loaded, indexRoute`)
+app.use(positiveRoute);
+console.log(`Route loaded, positiveRoute`)
+app.use(negativeRoute);
+console.log(`Route loaded, negativeRoute`)
+app.use(miscRoute);
+console.log(`Route loaded, miscRoute`)
+
+app.listen(process.env.port || config.port, () => {
+  console.log(`Running on port ${process.env.port || config.port}.`);
 });
-
-loadRoutes();
-
-
-function loadRoutes() {
-  const routesPath = path.join(__dirname, "./routes");
-
-  fs.readdir(routesPath, (err, files) => {
-    if (err) {
-      throw err;
-    }
-
-    files.forEach((filename) => {
-      const route = require(path.join(routesPath, filename));
-
-      const routePath = filename === "ticket.js" ? "/" : `/${filename.slice(0, -3)}`;
-
-      try {
-        app.use(routePath, route);
-        console.log(`${routePath}`);
-      } catch (error) {
-        console.log(
-          `Error occured with the route "${filename}":\n\n${error} Ignoring continuing`
-        );
-      }
-    });
-  });
-
-  return this;
-}
